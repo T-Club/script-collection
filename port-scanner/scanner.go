@@ -19,17 +19,10 @@ func main() {
 	for i := 0; i < 65535; i++ {
 		go s.scan(ch, i)
 	}
-	count := 0
-	for {
-		select {
-		case <-ch:
-			count++
-			if count >= 65535 {
-				return
-			}
-		default:
-		}
+	for i := 0; i < 65535; i++ {
+		<-ch
 	}
+	close(ch)
 }
 
 func (s *scanner) scan(ch chan int, port int) {
